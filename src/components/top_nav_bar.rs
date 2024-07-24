@@ -31,43 +31,17 @@ impl Component for TopNavBar {
 
     type Message = ();
 
-    fn resize(
-        &mut self,
-        state: &mut Self::State,
-        _elements: anathema::widgets::Elements<'_, '_>,
-        context: anathema::prelude::Context<'_>,
-    ) {
-        let width = context.viewport.size().width;
-
-        state.width.set(width);
-    }
-
-    fn tick(
-        &mut self,
-        state: &mut Self::State,
-        _elements: anathema::widgets::Elements<'_, '_>,
-        context: anathema::prelude::Context<'_>,
-        _dt: std::time::Duration,
-    ) {
-        let width = context.viewport.size().width;
-
-        state.width.set(width);
-    }
-
     fn accept_focus(&self) -> bool {
         false
     }
 }
 
 #[derive(State)]
-pub struct TopNavBarState {
-    pub width: Value<usize>,
-}
+pub struct TopNavBarState {}
 
 impl TopNavBarState {
     pub fn new() -> Self {
-        let width = Value::new(30);
 
-        Self { width }
+        Self { }
     }
 }

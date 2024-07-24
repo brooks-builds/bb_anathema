@@ -1,3 +1,4 @@
-border [sides: "bottom", height: 2, width: width]
+border [sides: "bottom", height: 2 ]
 	hstack
 		$title
+		spacer
