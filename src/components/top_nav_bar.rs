@@ -4,7 +4,7 @@ use anathema::{
     backend::tui::TuiBackend,
     component::{Component, ComponentId},
     runtime::RuntimeBuilder,
-    state::{State, Value},
+    state::State,
 };
 
 pub struct TopNavBar;
@@ -41,7 +41,6 @@ pub struct TopNavBarState {}
 
 impl TopNavBarState {
     pub fn new() -> Self {
-
-        Self { }
+        Self {}
     }
 }
