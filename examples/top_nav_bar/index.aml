@@ -1,3 +1,7 @@
 @bb_top_nav_bar
 	$title
 		text "Top Nav Bar Example"
+	$center
+		text "Center"
+	$right
+		text "Right"
