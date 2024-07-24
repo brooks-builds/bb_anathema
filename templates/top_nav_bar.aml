@@ -1,0 +1,3 @@
+border [sides: "bottom", height: 2, width: width]
+	hstack
+		$title
