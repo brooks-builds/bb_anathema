@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{error::Error, ops::Deref};
 
 use anathema::{
     backend::tui::TuiBackend,
@@ -28,6 +28,21 @@ impl Component for Link {
     type State = LinkState;
 
     type Message = ();
+
+    fn on_mouse(
+        &mut self,
+        mouse: anathema::component::MouseEvent,
+        state: &mut Self::State,
+        mut elements: anathema::widgets::Elements<'_, '_>,
+        _context: anathema::prelude::Context<'_>,
+    ) {
+        elements
+            .query()
+            .at_position(mouse.pos())
+            .each(|_el, _attr| {
+                opener::open(state.href.to_ref().deref()).unwrap();
+            })
+    }
 }
 
 #[derive(State)]
