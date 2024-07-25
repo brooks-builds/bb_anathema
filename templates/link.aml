@@ -1,0 +1,2 @@
+border [sides: "bottom", height: 2, foreground: #3366ff]
+	text value " (" href ")"
