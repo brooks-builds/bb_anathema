@@ -19,11 +19,12 @@ impl Nav {
     pub fn register(
         runtime: &mut RuntimeBuilder<TuiBackend>,
         routes: Vec<String>,
+        observers: Vec<ComponentId<String>>,
     ) -> Result<ComponentId<String>, impl Error> {
         runtime.register_component(
             "bb_nav",
             "templates/nav.aml",
-            Self::new(vec![]),
+            Self::new(observers),
             NavState::new(routes, "Home".to_owned()),
         )
     }
@@ -37,7 +38,7 @@ impl Component for Nav {
     fn on_mouse(
         &mut self,
         mouse: anathema::component::MouseEvent,
-        _state: &mut Self::State,
+        state: &mut Self::State,
         mut elements: anathema::widgets::Elements<'_, '_>,
         context: anathema::prelude::Context<'_>,
     ) {
@@ -55,6 +56,8 @@ impl Component for Nav {
                         .emit(observer.to_owned(), v.to_owned())
                         .unwrap()
                 });
+
+                state.current.set(v.to_owned());
             })
         })
     }
