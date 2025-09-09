@@ -1,5 +1,0 @@
-border [foreground: color]
-	hstack
-		spacer
-		text message
-		spacer

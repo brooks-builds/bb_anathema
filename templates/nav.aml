@@ -1,8 +1,0 @@
-hstack [nav: true]
-	for route in routes
-		if loop != 0
-			text " | "
-		if current == route 
-			text [foreground: "blue"] route
-		else
-			text route

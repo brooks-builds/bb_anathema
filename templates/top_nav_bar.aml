@@ -1,7 +1,0 @@
-border [sides: "bottom", height: 2 ]
-	hstack
-		$title
-		spacer
-		$center
-		spacer
-		$right
