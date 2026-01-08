@@ -1,0 +1,3 @@
+border [sides: "bottom"]
+    expand [axis: "horz"]
+        text attributes.app_name

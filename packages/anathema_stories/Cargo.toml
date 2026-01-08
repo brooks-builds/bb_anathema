@@ -1,0 +1,10 @@
+[package]
+name = "bb_anathema_stories"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+anathema.workspace = true
+color-eyre = "0.6.5"
+eyre = "0.6.12"
+bb_anathema_components.workspace = true

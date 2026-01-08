@@ -1,0 +1,10 @@
+[workspace]
+members = ["packages/*"]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+
+[workspace.dependencies]
+anathema = "0.2.11"
+bb_anathema_components = { path = "./packages/anathema_components" }
