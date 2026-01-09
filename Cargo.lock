@@ -182,6 +182,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "bb_anathema_macros"
+version = "0.1.0"
+dependencies = [
+ "anathema",
+ "bb_anathema_components",
+]
+
+[[package]]
 name = "bb_anathema_stories"
 version = "0.1.0"
 dependencies = [

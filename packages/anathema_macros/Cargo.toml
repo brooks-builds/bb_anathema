@@ -1,10 +1,11 @@
 [package]
-name = "bb_anathema_stories"
+name = "bb_anathema_macros"
 version = "0.1.0"
 edition.workspace = true
 
+[lib]
+proc-macro = true
+
 [dependencies]
-anathema.workspace = true
+anathema = { workspace = true }
 bb_anathema_components = { path = "../anathema_components" }
-color-eyre = "0.6.5"
-eyre = "0.6.12"

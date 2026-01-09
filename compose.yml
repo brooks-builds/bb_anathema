@@ -1,0 +1,16 @@
+services:
+  hx:
+    image: brookzerker/helix:root
+    volumes:
+      - .:/code
+      - /Users/brooks/code/brooks-builds/helix_config/config.toml:/root/.config/helix/config.toml
+      - /Users/brooks/code/brooks-builds/helix_config/languages.toml:/root/.config/helix/languages.toml
+    profiles:
+      - editor
+  shell:    
+    image: brookzerker/helix:root
+    volumes:
+      - .:/code
+    profiles:
+      - shell
+    
