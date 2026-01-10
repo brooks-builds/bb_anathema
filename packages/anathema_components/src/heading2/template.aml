@@ -1,0 +1,5 @@
+hstack
+	spacer
+	border [sides: "bottom"]
+		text attributes.text
+	spacer

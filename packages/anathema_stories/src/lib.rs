@@ -1,6 +1,10 @@
 mod app;
+mod router;
 
-use crate::app::App;
+use crate::{
+    app::App,
+    router::{Router, bb_topnav::TopNavStory, home::Home},
+};
 use anathema::{
     prelude::{Backend, Document, TuiBackend},
     runtime::Runtime,
@@ -24,6 +28,9 @@ pub fn run() -> Result<()> {
     bb_anathema_components::register_all(&mut builder)?;
 
     App::register_to(&mut builder)?;
+    Router::register_to(&mut builder)?;
+    Home::register_to(&mut builder)?;
+    TopNavStory::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))

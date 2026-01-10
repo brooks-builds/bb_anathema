@@ -1,1 +1,17 @@
-@BBTopNav [app_name: "BB Anathema Stories"]
+vstack
+	@BBTopNav [app_name: "BB Anathema Stories"]
+	hstack
+		border [sides: "right", max_width: 40]
+			expand [axis: "vert"]
+				vstack
+					@BBH2 [text: "Components"]
+					padding [left: 2]
+						@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
+							text "BBTopNav"
+					padding [left: 2]
+						@BBLink [to: "/components/bbh2"]
+							text "BBH2"
+					padding [left: 2]
+						@BBLink [to: "/components/bblink"]
+							text "BBLink"
+		@Router

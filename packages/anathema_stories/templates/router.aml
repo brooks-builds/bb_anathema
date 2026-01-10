@@ -1,0 +1,5 @@
+vstack
+	text state.path
+	switch state.path
+		case "/": @home
+		case "/stories/bb_topnav": @TopNavStory

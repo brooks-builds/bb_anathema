@@ -1,0 +1,6 @@
+if state.mouse_down
+	container [foreground: "lightblue"]
+		$children
+else
+	container [foreground: "blue"]
+		$children
