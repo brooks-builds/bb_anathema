@@ -1,10 +1,12 @@
+mod app;
+
+use crate::app::App;
 use anathema::{
     prelude::{Backend, Document, TuiBackend},
     runtime::Runtime,
 };
+use bb_anathema_components::BBAppComponent;
 use eyre::{Context, Result};
-
-mod app;
 
 pub fn run() -> Result<()> {
     let doc = Document::new("@app");
@@ -20,7 +22,8 @@ pub fn run() -> Result<()> {
     let mut builder = Runtime::builder(doc, &backend);
 
     bb_anathema_components::register_all(&mut builder)?;
-    app::register(&mut builder)?;
+
+    App::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))

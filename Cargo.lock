@@ -179,6 +179,7 @@ name = "bb_anathema_components"
 version = "0.1.0"
 dependencies = [
  "anathema",
+ "bb_anathema_macros",
 ]
 
 [[package]]
@@ -186,7 +187,9 @@ name = "bb_anathema_macros"
 version = "0.1.0"
 dependencies = [
  "anathema",
- "bb_anathema_components",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

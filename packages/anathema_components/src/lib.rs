@@ -14,3 +14,9 @@ pub trait BBComponent {
     fn load_template() -> &'static str;
     fn ident() -> &'static str;
 }
+
+pub trait BBAppComponent {
+    fn register_to(
+        builder: &mut anathema::runtime::Builder<()>,
+    ) -> Result<anathema::component::ComponentId<()>, Error>;
+}

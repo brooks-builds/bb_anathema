@@ -8,4 +8,6 @@ proc-macro = true
 
 [dependencies]
 anathema = { workspace = true }
-bb_anathema_components = { path = "../anathema_components" }
+proc-macro2 = "1.0.105"
+quote = "1.0.43"
+syn = { version = "2.0.114", features = ["full"] }
