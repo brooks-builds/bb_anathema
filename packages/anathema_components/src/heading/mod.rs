@@ -8,4 +8,8 @@ impl Component for BBHeading {
     type State = ();
 
     type Message = ();
+
+    fn accept_focus(&self) -> bool {
+        false
+    }
 }

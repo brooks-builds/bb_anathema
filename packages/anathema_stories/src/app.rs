@@ -21,6 +21,10 @@ impl Component for App {
             context.components.by_name("Router").send(path);
         }
     }
+
+    fn accept_focus(&self) -> bool {
+        false
+    }
 }
 
 impl BBAppComponent for App {

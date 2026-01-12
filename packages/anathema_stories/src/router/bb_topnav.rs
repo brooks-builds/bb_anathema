@@ -1,12 +1,36 @@
-use anathema::component::Component;
+use anathema::{
+    component::Component,
+    state::{State, Value},
+};
 use bb_anathema_components::BBAppComponent;
 
 pub struct TopNavStory;
 
 impl Component for TopNavStory {
-    type State = ();
+    type State = TopNavStoryState;
 
     type Message = ();
+
+    fn accept_focus(&self) -> bool {
+        false
+    }
+
+    fn on_event(
+        &mut self,
+        event: &mut anathema::component::UserEvent<'_>,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        if event.name() == "app_name_changed" {
+            let Some(app_name) = event.data_checked::<String>() else {
+                return;
+            };
+
+            state.app_name.set(app_name.to_owned());
+            state.code.set(create_example(app_name));
+        }
+    }
 }
 
 impl BBAppComponent for TopNavStory {
@@ -17,8 +41,30 @@ impl BBAppComponent for TopNavStory {
             "TopNavStory",
             "templates/routes/bb_topnav_story.aml",
             Self,
-            (),
+            TopNavStoryState::new(),
         )?;
         Ok(())
     }
+}
+
+#[derive(State, Debug)]
+pub struct TopNavStoryState {
+    app_name: Value<String>,
+    code: Value<String>,
+}
+
+impl TopNavStoryState {
+    pub fn new() -> Self {
+        let app_name = String::from("App Name");
+        let code = Value::new(create_example(&app_name));
+
+        Self {
+            app_name: Value::new(app_name),
+            code,
+        }
+    }
+}
+
+fn create_example(app_name: &str) -> String {
+    format!("@BBTopNav [app_name: \"{app_name}\"]")
 }

@@ -1,10 +1,8 @@
 vstack
 	@BBHeading [text: "BBTopNav"]
 	padding [padding: 1]
-		@BBTopNav [app_name: "App Name"]
+		@BBTopNav [app_name: state.app_name]
 	@BBHeading [text: "Attributes"]
-	@BBInput [initial_value: "App Name", label: "app_name"]
+	@BBInput (on_change->app_name_changed) [initial_value: state.app_name, label: "app_name"]
 	@BBHeading [text: "AML"]
-	border
-		padding [padding: 1]
-			text '@BBTopNav [appname: "App Name"]'
+	@BBBlock [value: state.code]

@@ -50,6 +50,10 @@ impl Component for BBLink {
             state.mouse_down.set(false);
         }
     }
+
+    fn accept_focus(&self) -> bool {
+        false
+    }
 }
 
 #[derive(Debug, State, Default)]

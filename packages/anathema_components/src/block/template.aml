@@ -1,0 +1,7 @@
+border [min_width: 10, foreground: state.foreground]
+	hstack
+		padding [padding: 1]
+			text attributes.value
+		if attributes.copy
+			position [left: -5, top: 0]
+				text [foreground: "#9fa2a9"] "copy"

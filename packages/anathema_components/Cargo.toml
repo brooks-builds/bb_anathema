@@ -6,3 +6,4 @@ edition.workspace = true
 [dependencies]
 anathema.workspace = true
 bb_anathema_macros = { path = "../anathema_macros" }
+arboard = "3.6.1"

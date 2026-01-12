@@ -1,5 +1,6 @@
-hstack
+hstack [foreground: state.foreground]
 	padding [right: 2]
 		text attributes.label
-	border [sides: "bottom", min_width: 15]
-		text state.value
+	zstack
+		border [sides: "bottom", min_width: 15]
+			text bb_insert_into(state.value, state.cursor_index, "|")

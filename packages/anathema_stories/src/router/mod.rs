@@ -23,6 +23,10 @@ impl Component for Router {
     ) {
         state.path.set(message);
     }
+
+    fn accept_focus(&self) -> bool {
+        false
+    }
 }
 
 impl BBAppComponent for Router {
