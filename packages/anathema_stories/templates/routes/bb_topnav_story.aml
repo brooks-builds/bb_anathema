@@ -1,1 +1,10 @@
-text "BB Top Nav"
+vstack
+	@BBHeading [text: "BBTopNav"]
+	padding [padding: 1]
+		@BBTopNav [app_name: "App Name"]
+	@BBHeading [text: "Attributes"]
+	@BBInput [initial_value: "App Name", label: "app_name"]
+	@BBHeading [text: "AML"]
+	border
+		padding [padding: 1]
+			text '@BBTopNav [appname: "App Name"]'

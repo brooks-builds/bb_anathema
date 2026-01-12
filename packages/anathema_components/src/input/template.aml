@@ -1,0 +1,5 @@
+hstack
+	padding [right: 2]
+		text attributes.label
+	border [sides: "bottom", min_width: 15]
+		text state.value

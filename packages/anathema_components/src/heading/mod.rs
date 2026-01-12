@@ -2,9 +2,9 @@ use anathema::component::Component;
 use bb_anathema_macros::BBComponent;
 
 #[derive(BBComponent)]
-pub struct BBH2;
+pub struct BBHeading;
 
-impl Component for BBH2 {
+impl Component for BBHeading {
     type State = ();
 
     type Message = ();
