@@ -34,8 +34,7 @@ pub struct NewAnathemaSnippetState {
 
 impl NewAnathemaSnippetState {
     pub fn new() -> Self {
-        let snippet = r#"
-use anathema::{
+        let snippet = r#"use anathema::{
     component::Component,
     prelude::{Backend, Document, SourceKind, ToSourceKind, TuiBackend},
     runtime::Runtime,

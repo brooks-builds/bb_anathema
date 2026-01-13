@@ -22,7 +22,7 @@ pub fn derive_bb_component(input: TokenStream) -> TokenStream {
     }
 
     let state_init = match &state_type {
-        Some(state_type) => quote! { || #state_type::new() },
+        Some(state_type) => quote! { || #state_type::default() },
         None => quote! { || () },
     };
 

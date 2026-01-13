@@ -130,6 +130,19 @@ impl Component for BBInput {
     fn accept_focus(&self) -> bool {
         true
     }
+
+    fn on_mouse(
+        &mut self,
+        mouse: anathema::component::MouseEvent,
+        _state: &mut Self::State,
+        mut children: anathema::component::Children<'_, '_>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        children
+            .elements()
+            .at_position(mouse.pos())
+            .first(|_, _| context.components.by_name("BBInput").focus());
+    }
 }
 
 #[derive(Debug, State, Default)]

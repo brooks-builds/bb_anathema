@@ -1,12 +1,12 @@
 border [min_width: 10, foreground: state.foreground]
 	vstack
-		border [sides: "bottom"]
-			hstack
-				text "Scroll with ↑ and ↓"
-				spacer
-				if attributes.copy
-					text [foreground: "#9fa2a9"] "copy"
-	hstack
-		padding [padding: 1]
-			overflow [unconstrained: true]
-				text attributes.value
+		if attributes.header
+			border [sides: "bottom"]
+				hstack
+					if attributes.scroll
+						text "Scroll with ↑ and ↓"
+					spacer
+					if attributes.copy
+						@BBButton (click->copy) [label: state.copy_label]
+		overflow 
+			text attributes.value

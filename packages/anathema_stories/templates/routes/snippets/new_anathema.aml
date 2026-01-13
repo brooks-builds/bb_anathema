@@ -1,1 +1,1 @@
-@BBBlock [value: state.snippet, copy: true]
+@BBBlock [value: state.snippet, copy: true, scroll: true, header: true]

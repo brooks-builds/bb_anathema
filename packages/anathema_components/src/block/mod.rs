@@ -69,7 +69,7 @@ impl Component for BBBlock {
     fn on_event(
         &mut self,
         event: &mut anathema::component::UserEvent<'_>,
-        _state: &mut Self::State,
+        state: &mut Self::State,
         mut _children: anathema::component::Children<'_, '_>,
         context: anathema::component::Context<'_, '_, Self::State>,
     ) {
@@ -82,30 +82,34 @@ impl Component for BBBlock {
         let Some(value) = value.as_str() else { return };
         if let Ok(mut clipboard) = Clipboard::new() {
             clipboard.set_text(value).ok();
+            state.copy_label.set("copied".to_owned());
         }
     }
 }
 
-#[derive(Debug, State, Default)]
+#[derive(Debug, State)]
 pub struct BBBlockState {
     started_clicking: Value<bool>,
     foreground: Value<String>,
     width: Value<u16>,
     height: Value<u16>,
+    copy_label: Value<String>,
 }
 
-impl BBBlockState {
-    pub fn new() -> Self {
+impl Default for BBBlockState {
+    fn default() -> Self {
         let started_clicking = Value::default();
         let foreground = Value::new(String::from("white"));
         let width = Value::default();
         let height = Value::default();
+        let copy_label = Value::new("copy".to_owned());
 
         Self {
             started_clicking,
             foreground,
             width,
             height,
+            copy_label,
         }
     }
 }

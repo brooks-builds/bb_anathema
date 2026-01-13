@@ -1,10 +1,13 @@
 pub mod block;
+pub mod button;
 pub mod heading;
 pub mod input;
 pub mod link;
 pub mod top_nav;
 
-use crate::{block::BBBlock, heading::BBHeading, input::BBInput, top_nav::BBTopNav};
+use crate::{
+    block::BBBlock, button::BBButton, heading::BBHeading, input::BBInput, top_nav::BBTopNav,
+};
 use anathema::{
     resolver::ValueKind,
     runtime::{Builder, Error},
@@ -16,6 +19,7 @@ pub fn register_all(builder: &mut Builder<()>) -> Result<(), Error> {
     link::BBLink::register_to(builder)?;
     BBInput::register_to(builder)?;
     BBBlock::register_to(builder)?;
+    BBButton::register_to(builder)?;
 
     builder.register_function("bb_insert_into", insert_into)?;
 

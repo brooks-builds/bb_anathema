@@ -1,8 +1,8 @@
-vstack
+vstack [height: 40]
 	@BBHeading [text: "BBTopNav"]
 	padding [padding: 1]
 		@BBTopNav [app_name: state.app_name]
 	@BBHeading [text: "Attributes"]
 	@BBInput (on_change->app_name_changed) [initial_value: state.app_name, label: "app_name"]
 	@BBHeading [text: "AML"]
-	@BBBlock [value: state.code]
+	@BBBlock [value: state.code, copy: true, header: true]
