@@ -29,6 +29,13 @@ impl Component for TopNavStory {
 
             state.app_name.set(app_name.to_owned());
             state.code.set(create_example(app_name));
+        } else if event.name() == "generate_aml" {
+            let code = create_example(state.app_name.to_ref().as_str());
+
+            state.code.set(code);
+            state.show_code.set(true);
+        } else if event.name() == "code_copied" {
+            state.show_code.set(false);
         }
     }
 }
@@ -51,16 +58,19 @@ impl BBAppComponent for TopNavStory {
 pub struct TopNavStoryState {
     app_name: Value<String>,
     code: Value<String>,
+    show_code: Value<bool>,
 }
 
 impl TopNavStoryState {
     pub fn new() -> Self {
         let app_name = String::from("App Name");
         let code = Value::new(create_example(&app_name));
+        let show_code = Value::new(false);
 
         Self {
             app_name: Value::new(app_name),
             code,
+            show_code,
         }
     }
 }

@@ -71,7 +71,7 @@ impl Component for BBBlock {
         event: &mut anathema::component::UserEvent<'_>,
         state: &mut Self::State,
         mut _children: anathema::component::Children<'_, '_>,
-        context: anathema::component::Context<'_, '_, Self::State>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         if event.name() != "copy" {
             return;
@@ -83,6 +83,8 @@ impl Component for BBBlock {
         if let Ok(mut clipboard) = Clipboard::new() {
             clipboard.set_text(value).ok();
             state.copy_label.set("copied".to_owned());
+
+            context.publish("copied", ());
         }
     }
 }

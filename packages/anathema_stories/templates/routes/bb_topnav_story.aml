@@ -4,5 +4,6 @@ vstack [height: 40]
 		@BBTopNav [app_name: state.app_name]
 	@BBHeading [text: "Attributes"]
 	@BBInput (on_change->app_name_changed) [initial_value: state.app_name, label: "app_name"]
-	@BBHeading [text: "AML"]
-	@BBBlock [value: state.code, copy: true, header: true]
+	@BBButton (click->generate_aml) [label: "generate aml"]
+	if state.show_code
+		@BBBlock (copied->code_copied) [value: state.code, copy: true, header: true]
