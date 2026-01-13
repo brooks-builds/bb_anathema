@@ -1,3 +1,4 @@
 switch state.path
 	case "/": @home
 	case "/stories/bb_topnav": @TopNavStory
+	case "/snippets/new_anathema": @new_anathema_snippet

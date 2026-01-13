@@ -1,7 +1,12 @@
 border [min_width: 10, foreground: state.foreground]
+	vstack
+		border [sides: "bottom"]
+			hstack
+				text "Scroll with ↑ and ↓"
+				spacer
+				if attributes.copy
+					text [foreground: "#9fa2a9"] "copy"
 	hstack
 		padding [padding: 1]
-			text attributes.value
-		if attributes.copy
-			position [left: -5, top: 0]
-				text [foreground: "#9fa2a9"] "copy"
+			overflow [unconstrained: true]
+				text attributes.value

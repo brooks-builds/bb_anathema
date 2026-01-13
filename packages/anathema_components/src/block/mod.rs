@@ -1,5 +1,6 @@
 use anathema::{
-    component::Component,
+    component::{Component, KeyCode},
+    default_widgets::Overflow,
     state::{State, Value},
 };
 use arboard::Clipboard;
@@ -15,46 +16,73 @@ impl Component for BBBlock {
     type Message = ();
 
     fn accept_focus(&self) -> bool {
-        false
+        true
     }
 
     fn on_mouse(
         &mut self,
         mouse: anathema::component::MouseEvent,
-        state: &mut Self::State,
+        _state: &mut Self::State,
         mut children: anathema::component::Children<'_, '_>,
-        context: anathema::component::Context<'_, '_, Self::State>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
-        if context.attribute("copy").is_none()
-            || context
-                .attribute("copy")
-                .is_some_and(|copy| !copy.as_bool().unwrap_or_default())
-        {
-            return;
-        }
-
         children
             .elements()
             .at_position(mouse.pos())
-            .first(|_el, attributes| {
+            .by_tag("overflow")
+            .first(|_el, _el_attr| {
                 if mouse.left_down() {
-                    state.foreground.set("red".to_owned());
-                    state.started_clicking.set(true);
-                } else if mouse.left_up() && *state.started_clicking.to_ref() {
-                    state.foreground.set("white".to_owned());
-                    state.started_clicking.set(false);
-                    // think this is a bug, the attributes are never updated
-                    let Some(value) = attributes.get("value") else {
-                        return;
-                    };
-                    let Some(value) = value.as_str() else { return };
-                    let Ok(mut clipboard) = Clipboard::new() else {
-                        return;
-                    };
-
-                    clipboard.set_text(value).ok();
+                    context.components.by_name("BBBlock").focus();
                 }
             });
+    }
+
+    fn on_key(
+        &mut self,
+        key: anathema::component::KeyEvent,
+        _state: &mut Self::State,
+        mut children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        let code = key.code;
+
+        children
+            .elements()
+            .by_tag("overflow")
+            .first(|element, _overflow_attributes| {
+                let Some(overflow) = element.try_to::<Overflow>() else {
+                    return;
+                };
+
+                match code {
+                    KeyCode::Down => {
+                        overflow.scroll_down();
+                    }
+                    KeyCode::Up => overflow.scroll_up(),
+                    KeyCode::Char('k') => overflow.scroll_up(),
+                    KeyCode::Char('j') => overflow.scroll_down(),
+                    _ => (),
+                }
+            });
+    }
+
+    fn on_event(
+        &mut self,
+        event: &mut anathema::component::UserEvent<'_>,
+        _state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        if event.name() != "copy" {
+            return;
+        }
+        let Some(value) = context.attribute("value") else {
+            return;
+        };
+        let Some(value) = value.as_str() else { return };
+        if let Ok(mut clipboard) = Clipboard::new() {
+            clipboard.set_text(value).ok();
+        }
     }
 }
 
@@ -62,16 +90,22 @@ impl Component for BBBlock {
 pub struct BBBlockState {
     started_clicking: Value<bool>,
     foreground: Value<String>,
+    width: Value<u16>,
+    height: Value<u16>,
 }
 
 impl BBBlockState {
     pub fn new() -> Self {
         let started_clicking = Value::default();
         let foreground = Value::new(String::from("white"));
+        let width = Value::default();
+        let height = Value::default();
 
         Self {
             started_clicking,
             foreground,
+            width,
+            height,
         }
     }
 }

@@ -1,11 +1,15 @@
 vstack
 	@BBTopNav [app_name: "BB Anathema Stories"]
 	hstack
-		border [sides: "right", max_width: 20]
-			expand [axis: "vert"]
-				vstack
-					@BBHeading [text: "Components"]
-					padding [left: 2]
-						@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
-							text "BBTopNav"
-		@Router
+		border [sides: "right", width: state.left_nav_width, height: state.height]
+			vstack
+				@BBHeading [text: "Snippets"]
+				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/snippets/new_anathema"]
+						text "New Anathema"
+				@BBHeading [text: "Components"]
+				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
+						text "BBTopNav"
+		container [width: state.main_width, height: state.height]
+			@Router

@@ -3,7 +3,9 @@ mod router;
 
 use crate::{
     app::App,
-    router::{Router, bb_topnav::TopNavStory, home::Home},
+    router::{
+        Router, bb_topnav::TopNavStory, home::Home, snippets::new_anathema::NewAnathemaSnippet,
+    },
 };
 use anathema::{
     prelude::{Backend, Document, TuiBackend},
@@ -31,6 +33,7 @@ pub fn run() -> Result<()> {
     Router::register_to(&mut builder)?;
     Home::register_to(&mut builder)?;
     TopNavStory::register_to(&mut builder)?;
+    NewAnathemaSnippet::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))
