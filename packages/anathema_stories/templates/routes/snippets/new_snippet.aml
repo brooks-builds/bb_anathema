@@ -1,0 +1,10 @@
+vstack
+	@BBHeading [text: "New Snippet Instructions and Code", padding_bottom: 1]
+
+	text "1. Create template for the snippet at 'templates/routes/snippets'"
+	padding [top: 1]
+		text "2. Create struct for the snippet at ' packages/anathema_stories/src/router/snippets/'"
+	padding [top: 1]
+		text "3. Wire it up in the main library"
+
+	@BBBlock [value: state.code, copy: true, scroll: true, header: true]

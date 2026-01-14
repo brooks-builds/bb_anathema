@@ -4,7 +4,10 @@ mod router;
 use crate::{
     app::App,
     router::{
-        Router, bb_topnav::TopNavStory, home::Home, snippets::new_anathema::NewAnathemaSnippet,
+        Router,
+        bb_topnav::TopNavStory,
+        home::Home,
+        snippets::{new_anathema::NewAnathemaSnippet, new_snippet::NewSnippet},
     },
 };
 use anathema::{
@@ -34,6 +37,7 @@ pub fn run() -> Result<()> {
     Home::register_to(&mut builder)?;
     TopNavStory::register_to(&mut builder)?;
     NewAnathemaSnippet::register_to(&mut builder)?;
+    NewSnippet::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))

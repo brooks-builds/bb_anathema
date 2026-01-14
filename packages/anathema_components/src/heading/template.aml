@@ -1,5 +1,7 @@
-hstack
-	spacer
-	border [sides: "bottom"]
-		text attributes.text
-	spacer
+vstack
+	padding [bottom: attributes.padding_bottom, top: attributes.padding_top]
+		hstack
+			spacer
+			border [sides: "bottom"]
+				text attributes.text
+			spacer

@@ -7,7 +7,10 @@ vstack
 				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/snippets/new_anathema"]
 						text "New Anathema"
-				@BBHeading [text: "Components"]
+				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/snippets/new_snippet"]
+						text "New Snippet"
+				@BBHeading [text: "Components", padding_top: 1]
 				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
 						text "BBTopNav"
