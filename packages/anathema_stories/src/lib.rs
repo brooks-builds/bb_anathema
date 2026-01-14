@@ -7,7 +7,10 @@ use crate::{
         Router,
         bb_topnav::TopNavStory,
         home::Home,
-        snippets::{new_anathema::NewAnathemaSnippet, new_snippet::NewSnippet},
+        snippets::{
+            new_anathema::NewAnathemaSnippet, new_component::NewComponent, new_snippet::NewSnippet,
+        },
+        stories::BBBlock::BBBlockStory,
     },
 };
 use anathema::{
@@ -38,6 +41,8 @@ pub fn run() -> Result<()> {
     TopNavStory::register_to(&mut builder)?;
     NewAnathemaSnippet::register_to(&mut builder)?;
     NewSnippet::register_to(&mut builder)?;
+    NewComponent::register_to(&mut builder)?;
+    BBBlockStory::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))

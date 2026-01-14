@@ -1,10 +1,12 @@
-border [min_width: 10, foreground: state.foreground]
+border [min_width: 10, foreground: state.foreground, max_height: attributes.max_height]
 	vstack
 		if attributes.header
 			border [sides: "bottom"]
 				hstack
 					if attributes.scroll
 						text "Scroll with ↑ and ↓"
+					spacer
+					text attributes.title
 					spacer
 					if attributes.copy
 						@BBButton (click->copy) [label: state.copy_label]

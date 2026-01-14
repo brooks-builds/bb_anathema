@@ -9,10 +9,16 @@ vstack
 						text "New Anathema"
 				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/snippets/new_snippet"]
-						text "New Snippet"
+						text "New Snippet Struct"
+				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/snippets/new_component"]
+						text "New Story Component"
 				@BBHeading [text: "Components", padding_top: 1]
 				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
 						text "BBTopNav"
+				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/stories/bbbock_story"]
+						text "BBBlock"
 		container [width: state.main_width, height: state.height]
-			@Router
+			@Router [width: state.main_width, height: state.height]

@@ -3,9 +3,9 @@ hstack
         expand [axis: "vert"]
             vstack
                 @BBHeading [text: "Instruction", padding_bottom: 1]
-                text "1. Create template file at packages/anathema_stories/templates/routes/snippets/"
+                text "1. Create template file at packages/anathema_stories/templates/routes/stories"
                 padding [top: 1]
-                    text "2. Create struct in  packages/anathema_stories/src/router/snippets/"
+                    text "2. Use Rust Analyzer to creat new module at 'packages/anathema_stories/src/router/stories/mod.rs'"
                 padding [top: 1]
                     text "3. Wire up the component in packages/anathema_stories/src/lib.rs"
                 padding [top: 1]
@@ -14,6 +14,6 @@ hstack
                     text "5. Add the component to the router"
     vstack 
         @BBHeading [text: "Code", padding_bottom: 1]
-        @BBBlock [value: state.rust_code, header: true, scroll: true, copy: true, max_height: 10, title: "Rust"]
         @BBBlock [value: state.aml_code, header: true, scroll: true, copy: true, max_height: 10, title: "AML"]
-
+        @BBBlock [value: state.rust_code, header: true, scroll: true, copy: true, max_height: 10, title: "Rust"]
+        

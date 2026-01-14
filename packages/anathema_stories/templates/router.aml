@@ -2,4 +2,6 @@ switch state.path
 	case "/": @home
 	case "/stories/bb_topnav": @TopNavStory
 	case "/snippets/new_anathema": @new_anathema_snippet
-	case "/snippets/new_snippet": @new_snippet
+	case "/snippets/new_snippet": @new_snippet [width: attributes.width, height: attributes.height]
+	case "/snippets/new_component": @new_component [width: attributes.width, height: attributes.height]
+	case "/stories/bbbock_story": @BBBlockStory [width: attributes.width, height: attributes.height]

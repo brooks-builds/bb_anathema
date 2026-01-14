@@ -1,6 +1,7 @@
 pub mod bb_topnav;
 pub mod home;
 pub mod snippets;
+pub mod stories;
 
 use anathema::{
     component::Component,
