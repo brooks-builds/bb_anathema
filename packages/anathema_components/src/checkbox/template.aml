@@ -1,0 +1,7 @@
+hstack
+	text attributes.label
+	padding [left: 1]
+		if state.checked
+			text "[x]"
+		else
+			text "[ ]"

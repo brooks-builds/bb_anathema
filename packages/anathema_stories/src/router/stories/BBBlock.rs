@@ -33,15 +33,14 @@ impl Component for BBBlockStory {
                 state.attribute_height.set(height);
             }
             "set_header" => {
-                let header = event.data_checked::<String>().cloned().unwrap_or_default();
-                let header = header == "true";
+                let header = event.data_checked::<bool>().unwrap_or(&false);
 
-                state.attribute_header.set(header);
+                state.attribute_header.set(*header);
             }
             "set_scroll" => {
-                let scroll = event.data_checked::<String>().cloned().unwrap_or_default() == "true";
+                let scroll = event.data_checked::<bool>().unwrap_or(&false);
 
-                state.attribute_scroll.set(scroll);
+                state.attribute_scroll.set(*scroll);
             }
             "set_title" => {
                 let title = event.data_checked::<String>().cloned().unwrap_or_default();
@@ -49,9 +48,9 @@ impl Component for BBBlockStory {
                 state.attribute_title.set(title);
             }
             "set_copy" => {
-                let copy = event.data_checked::<String>().cloned().unwrap_or_default() == "true";
+                let copy = event.data_checked::<bool>().unwrap_or(&false);
 
-                state.attribute_copy.set(copy);
+                state.attribute_copy.set(*copy);
             }
             "set_value" => {
                 let value = event.data_checked::<String>().cloned().unwrap_or_default();

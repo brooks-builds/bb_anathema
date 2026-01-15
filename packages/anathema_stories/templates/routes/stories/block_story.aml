@@ -9,10 +9,10 @@ vstack
 		
 	@BBHeading [text: "Attributes"]
 	@BBInput (on_change->set_max_height) [label: "max_height", initial_value: to_str(state.attribute_height)]
-	@BBInput (on_change->set_header) [label: "header", initial_value: to_str(state.attribute_header)]
-	@BBInput (on_change->set_scroll) [label: "scroll", initial_value: to_str(state.attribute_scroll)]
+	@BBCheckbox (on_change->set_header) [label: "header", checked: true]
+	@BBCheckbox (on_change->set_scroll) [label: "scroll", checked: true]
 	@BBInput (on_change->set_title) [label: "title", initial_value: state.attribute_title]
-	@BBInput (on_change->set_copy) [label: "copy", initial_value: to_str(state.attribute_copy)]
+	@BBCheckbox (on_change->set_copy) [label: "copy", checked: true]
 	@BBInput (on_change->set_value) [label: "value", initial_value: state.attribute_value]
 	@BBHeading [text: "Events"]
 	text "copied -> ()"

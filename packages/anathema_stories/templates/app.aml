@@ -13,6 +13,9 @@ vstack
 				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/snippets/new_component"]
 						text "New Story Component"
+				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/snippets/creating_a_component"]
+						text "Creating a Component"
 				@BBHeading [text: "Components", padding_top: 1]
 				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]

@@ -1,12 +1,14 @@
 pub mod block;
 pub mod button;
+pub mod checkbox;
 pub mod heading;
 pub mod input;
 pub mod link;
 pub mod top_nav;
 
 use crate::{
-    block::BBBlock, button::BBButton, heading::BBHeading, input::BBInput, top_nav::BBTopNav,
+    block::BBBlock, button::BBButton, checkbox::BBCheckbox, heading::BBHeading, input::BBInput,
+    top_nav::BBTopNav,
 };
 use anathema::{
     resolver::ValueKind,
@@ -20,6 +22,7 @@ pub fn register_all(builder: &mut Builder<()>) -> Result<(), Error> {
     BBInput::register_to(builder)?;
     BBBlock::register_to(builder)?;
     BBButton::register_to(builder)?;
+    BBCheckbox::register_to(builder)?;
 
     builder.register_function("bb_insert_into", insert_into)?;
 

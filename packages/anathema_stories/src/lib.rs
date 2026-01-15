@@ -8,7 +8,8 @@ use crate::{
         bb_topnav::TopNavStory,
         home::Home,
         snippets::{
-            new_anathema::NewAnathemaSnippet, new_component::NewComponent, new_snippet::NewSnippet,
+            creating_a_component::CreatingAComponent, new_anathema::NewAnathemaSnippet,
+            new_component::NewComponent, new_snippet::NewSnippet,
         },
         stories::BBBlock::BBBlockStory,
     },
@@ -43,6 +44,7 @@ pub fn run() -> Result<()> {
     NewSnippet::register_to(&mut builder)?;
     NewComponent::register_to(&mut builder)?;
     BBBlockStory::register_to(&mut builder)?;
+    CreatingAComponent::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))
