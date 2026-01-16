@@ -1,1 +1,8 @@
-text [background: "green", foreground: state.foreground] attributes.label
+let THEME = {
+	normal: {bg: "light_blue", fg: "black"},
+	focused: {bg: "light_green", fg: "black"},
+	mouse_over: {bg: "light_yellow", fg: "black"},
+	mouse_down: {bg: "yellow", fg: "black"},
+}
+
+text [background: THEME[state.interactive_state].bg, foreground: THEME[state.interactive_state].fg] attributes.label

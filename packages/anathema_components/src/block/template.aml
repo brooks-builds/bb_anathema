@@ -1,5 +1,12 @@
-border [min_width: 10, foreground: state.foreground, max_height: attributes.max_height]
-	vstack
+let THEME = {
+	normal: {bg: "", fg: ""},
+	focused: {bg: "", fg: "light_green"},
+	mouse_over: {bg: "", fg: "light_yellow"},
+	mouse_down: {bg: "", fg: "yellow"},
+}
+
+border [min_width: 10, foreground: THEME[state.interactive_state].fg, max_height: attributes.max_height, background: THEME[state.interactive_state].bg]
+	vstack [foreground: "", background: ""]
 		if attributes.header
 			border [sides: "bottom"]
 				hstack

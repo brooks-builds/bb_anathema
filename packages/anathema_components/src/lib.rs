@@ -6,11 +6,14 @@ pub mod input;
 pub mod link;
 pub mod top_nav;
 
+use std::borrow::Cow;
+
 use crate::{
     block::BBBlock, button::BBButton, checkbox::BBCheckbox, heading::BBHeading, input::BBInput,
     top_nav::BBTopNav,
 };
 use anathema::{
+    component::Component,
     resolver::ValueKind,
     runtime::{Builder, Error},
 };
@@ -62,4 +65,49 @@ fn insert_into<'a>(args: &[ValueKind<'a>]) -> ValueKind<'a> {
     let full_value = [before, inserting_value, after].join("");
 
     ValueKind::Str(full_value.into())
+}
+
+#[derive(Debug, Default)]
+enum InteractiveState {
+    #[default]
+    Normal,
+    Focused,
+    MouseOver,
+    MouseDown,
+}
+
+impl InteractiveState {
+    pub fn is_mouse_down(&self) -> bool {
+        matches!(self, Self::MouseDown)
+    }
+}
+
+impl From<String> for InteractiveState {
+    fn from(value: String) -> Self {
+        Self::from(value.as_str())
+    }
+}
+
+impl From<InteractiveState> for String {
+    fn from(value: InteractiveState) -> Self {
+        match value {
+            InteractiveState::Normal => "normal",
+            InteractiveState::Focused => "focused",
+            InteractiveState::MouseOver => "mouse_over",
+            InteractiveState::MouseDown => "mouse_down",
+        }
+        .to_owned()
+    }
+}
+
+impl From<&str> for InteractiveState {
+    fn from(value: &str) -> Self {
+        match value {
+            "normal" => Self::Normal,
+            "focused" => Self::Focused,
+            "mouse_over" => Self::MouseOver,
+            "mouse_down" => Self::MouseDown,
+            _ => Self::Normal,
+        }
+    }
 }

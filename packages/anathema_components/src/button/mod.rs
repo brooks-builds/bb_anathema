@@ -1,3 +1,4 @@
+use crate::InteractiveState;
 use anathema::{
     component::Component,
     state::{State, Value},
@@ -21,42 +22,77 @@ impl Component for BBButton {
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         let position = mouse.pos();
+        let is_mouse_over = children
+            .elements()
+            .at_position(position)
+            .first(|_, _| {})
+            .is_some();
+        let interactive_state = InteractiveState::from(state.interactive_state.to_ref().as_str());
 
-        children.elements().at_position(position).first(|_, _| {
-            if mouse.left_down() {
-                state.start_click.set(true);
-                state.foreground.set("#00ff00".to_owned());
-            } else if mouse.left_up() && *state.start_click.to_ref() {
-                context.publish("click", ());
-            }
-        });
+        if is_mouse_over && mouse.left_down() {
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::MouseDown));
+        } else if is_mouse_over && mouse.left_up() && interactive_state.is_mouse_down() {
+            context.publish("click", ());
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::Normal));
+        } else if is_mouse_over {
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::MouseOver));
+        } else if !is_mouse_over {
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::Normal));
+        }
+    }
 
-        if mouse.left_up() {
-            state.start_click.set(false);
-            state.foreground.set("black".to_owned());
+    fn on_focus(
+        &mut self,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Focused));
+    }
+
+    fn on_blur(
+        &mut self,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Normal));
+    }
+
+    fn on_key(
+        &mut self,
+        key: anathema::component::KeyEvent,
+        _state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        if matches!(key.code, anathema::component::KeyCode::Enter) {
+            context.publish("click", ());
         }
     }
 }
 
 #[derive(Debug, State)]
 pub struct BBButtonState {
-    foreground: Value<String>,
-    start_click: Value<bool>,
-}
-
-impl BBButtonState {
-    pub fn new() -> Self {
-        Self::default()
-    }
+    interactive_state: Value<String>,
 }
 
 impl Default for BBButtonState {
     fn default() -> Self {
-        let foreground = Value::new("black".to_owned());
+        let interactive_state = Value::new(String::from(InteractiveState::Normal));
 
-        Self {
-            foreground,
-            start_click: Default::default(),
-        }
+        Self { interactive_state }
     }
 }

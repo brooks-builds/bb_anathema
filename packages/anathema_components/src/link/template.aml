@@ -1,6 +1,9 @@
-if state.mouse_down
-	container [foreground: "lightblue"]
-		$children
-else
-	container [foreground: "blue"]
-		$children
+let THEME = {
+	normal: {bg: "", fg: "light_blue"},
+	focused: {bg: "light_green", fg: "black"},
+	mouse_over: {bg: "", fg: "light_yellow"},
+	mouse_down: {bg: "", fg: "yellow"},
+}
+
+container [foreground: THEME[state.interactive_state].fg, background: THEME[state.interactive_state].bg]
+	$children

@@ -3,6 +3,7 @@ use anathema::{
     component::Component,
     prelude::ToSourceKind,
     state::{State, Value},
+    templates::expressions::ident,
 };
 
 pub struct BBInput {
@@ -131,17 +132,41 @@ impl Component for BBInput {
         true
     }
 
-    fn on_mouse(
+    fn on_focus(
         &mut self,
-        mouse: anathema::component::MouseEvent,
-        _state: &mut Self::State,
+        state: &mut Self::State,
         mut children: anathema::component::Children<'_, '_>,
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
-        children
+        state.focus.set(true);
+    }
+
+    fn on_blur(
+        &mut self,
+        state: &mut Self::State,
+        mut children: anathema::component::Children<'_, '_>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        state.focus.set(false);
+    }
+
+    fn on_mouse(
+        &mut self,
+        mouse: anathema::component::MouseEvent,
+        state: &mut Self::State,
+        mut children: anathema::component::Children<'_, '_>,
+        mut context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        let clicked_on = children
             .elements()
             .at_position(mouse.pos())
-            .first(|_, _| context.components.by_name("BBInput").focus());
+            .first(|el, _| mouse.left_down())
+            .unwrap_or_default();
+
+        if clicked_on {
+            let index = context.parent().unwrap().0.index();
+            context.components.nth(10).focus();
+        }
     }
 }
 
@@ -149,16 +174,11 @@ impl Component for BBInput {
 pub struct BBInputState {
     value: Value<String>,
     cursor_index: Value<usize>,
+    focus: Value<bool>,
 }
 
 impl BBInputState {
     pub fn new() -> Self {
-        let value = Value::default();
-        let cursor_index = Value::default();
-
-        Self {
-            value,
-            cursor_index,
-        }
+        Self::default()
     }
 }

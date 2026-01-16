@@ -6,4 +6,4 @@ members = ["packages/*"]
 edition = "2024"
 
 [workspace.dependencies]
-anathema = "0.2.11"
+anathema = {version = "0.2.11"}

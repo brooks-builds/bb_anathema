@@ -1,3 +1,4 @@
+use crate::InteractiveState;
 use anathema::{
     component::{Component, KeyCode},
     default_widgets::Overflow,
@@ -14,28 +15,6 @@ impl Component for BBBlock {
     type State = BBBlockState;
 
     type Message = ();
-
-    fn accept_focus(&self) -> bool {
-        true
-    }
-
-    fn on_mouse(
-        &mut self,
-        mouse: anathema::component::MouseEvent,
-        _state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
-    ) {
-        children
-            .elements()
-            .at_position(mouse.pos())
-            .by_tag("overflow")
-            .first(|_el, _el_attr| {
-                if mouse.left_down() {
-                    context.components.by_name("BBBlock").focus();
-                }
-            });
-    }
 
     fn on_key(
         &mut self,
@@ -87,31 +66,50 @@ impl Component for BBBlock {
             context.publish("copied", ());
         }
     }
+
+    fn on_focus(
+        &mut self,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Focused));
+    }
+
+    fn on_blur(
+        &mut self,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
+    ) {
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Normal));
+    }
 }
 
 #[derive(Debug, State)]
 pub struct BBBlockState {
-    started_clicking: Value<bool>,
-    foreground: Value<String>,
     width: Value<u16>,
     height: Value<u16>,
     copy_label: Value<String>,
+    interactive_state: Value<String>,
 }
 
 impl Default for BBBlockState {
     fn default() -> Self {
-        let started_clicking = Value::default();
-        let foreground = Value::new(String::from("white"));
         let width = Value::default();
         let height = Value::default();
         let copy_label = Value::new("copy".to_owned());
+        let interactive_state = Value::new(String::from(InteractiveState::Normal));
 
         Self {
-            started_clicking,
-            foreground,
             width,
             height,
             copy_label,
+            interactive_state,
         }
     }
 }
