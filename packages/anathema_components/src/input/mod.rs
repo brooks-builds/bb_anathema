@@ -1,9 +1,8 @@
-use crate::BBComponent;
+use crate::{BBComponent, InteractiveState};
 use anathema::{
     component::Component,
     prelude::ToSourceKind,
     state::{State, Value},
-    templates::expressions::ident,
 };
 
 pub struct BBInput {
@@ -18,7 +17,7 @@ impl BBComponent for BBInput {
             Self::ident(),
             Self::load_template().to_template(),
             || Self { cursor_index: 0 },
-            BBInputState::new,
+            BBInputState::default,
         )
     }
 
@@ -128,57 +127,46 @@ impl Component for BBInput {
         }
     }
 
-    fn accept_focus(&self) -> bool {
-        true
-    }
-
     fn on_focus(
         &mut self,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        _children: anathema::component::Children<'_, '_>,
+        _context: anathema::component::Context<'_, '_, Self::State>,
     ) {
-        state.focus.set(true);
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Focused));
     }
 
     fn on_blur(
         &mut self,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
     ) {
-        state.focus.set(false);
-    }
-
-    fn on_mouse(
-        &mut self,
-        mouse: anathema::component::MouseEvent,
-        state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
-    ) {
-        let clicked_on = children
-            .elements()
-            .at_position(mouse.pos())
-            .first(|el, _| mouse.left_down())
-            .unwrap_or_default();
-
-        if clicked_on {
-            let index = context.parent().unwrap().0.index();
-            context.components.nth(10).focus();
-        }
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Normal));
     }
 }
 
-#[derive(Debug, State, Default)]
+#[derive(Debug, State)]
 pub struct BBInputState {
     value: Value<String>,
     cursor_index: Value<usize>,
-    focus: Value<bool>,
+    interactive_state: Value<String>,
 }
 
-impl BBInputState {
-    pub fn new() -> Self {
-        Self::default()
+impl Default for BBInputState {
+    fn default() -> Self {
+        let interactive_state = Value::new(String::from(InteractiveState::Normal));
+        let cursor_index = Value::default();
+        let value = Value::default();
+
+        Self {
+            value,
+            cursor_index,
+            interactive_state,
+        }
     }
 }
