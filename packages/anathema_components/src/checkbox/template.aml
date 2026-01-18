@@ -1,7 +1,16 @@
+let THEME = {
+	normal: {fg: ""},
+	focused: {fg: "light_green"},
+	mouse_down: {fg: "light_green"},
+	mouse_over: {fg: "yellow"},
+}
 hstack
 	text attributes.label
 	padding [left: 1]
-		if state.checked
-			text "[x]"
-		else
-			text "[ ]"
+		hstack
+			text [foreground: THEME[state.interactive_state].fg] "["
+			if state.checked
+				text [foreground: ""] "x"
+			else
+				text [foreground: ""] " "
+			text [foreground: THEME[state.interactive_state].fg] "]"

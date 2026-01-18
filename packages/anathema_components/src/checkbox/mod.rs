@@ -1,8 +1,10 @@
 use anathema::{
-    component::Component,
+    component::{Component, Context},
     state::{State, Value},
 };
 use bb_anathema_macros::BBComponent;
+
+use crate::InteractiveState;
 
 #[derive(BBComponent)]
 #[bb_component(state = BBCheckboxState)]
@@ -20,30 +22,37 @@ impl Component for BBCheckbox {
         mut children: anathema::component::Children<'_, '_>,
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
-        children.elements().at_position(mouse.pos()).first(|_, _| {
-            let checked = *state.checked.to_ref();
-            let mut started_clicking = state.started_clicking.to_mut();
+        let is_mouse_over = children
+            .elements()
+            .at_position(mouse.pos())
+            .first(|_, _| {})
+            .is_some();
+        let interactive_state = InteractiveState::from(state.interactive_state.to_ref().as_str());
+        let mut checked = state.checked.to_mut();
 
-            if mouse.left_down() && !*started_clicking {
-                *started_clicking = true;
-            } else if mouse.left_up() && *started_clicking {
-                let checked = !checked;
-                state.checked.set(checked);
-
-                context.publish("on_change", checked);
-            }
-        });
-
-        if mouse.left_up() {
-            state.started_clicking.set(false);
+        if is_mouse_over && mouse.left_down() {
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::MouseDown));
+        } else if is_mouse_over && mouse.left_up() && interactive_state.is_mouse_down() {
+            *checked = !*checked;
+            publish_checked(&mut context, *checked);
+        } else if is_mouse_over {
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::MouseOver));
+        } else {
+            state
+                .interactive_state
+                .set(String::from(InteractiveState::Normal));
         }
     }
 
     fn on_mount(
         &mut self,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        mut _children: anathema::component::Children<'_, '_>,
+        context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         let checked = context
             .attribute("checked")
@@ -52,10 +61,63 @@ impl Component for BBCheckbox {
 
         state.checked.set(checked);
     }
+
+    fn on_focus(
+        &mut self,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: Context<'_, '_, Self::State>,
+    ) {
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Focused));
+    }
+
+    fn on_blur(
+        &mut self,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: Context<'_, '_, Self::State>,
+    ) {
+        state
+            .interactive_state
+            .set(String::from(InteractiveState::Normal));
+    }
+
+    fn on_key(
+        &mut self,
+        key: anathema::component::KeyEvent,
+        state: &mut Self::State,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut context: Context<'_, '_, Self::State>,
+    ) {
+        if matches!(key.code, anathema::component::KeyCode::Enter) {
+            let mut checked = state.checked.to_mut();
+
+            *checked = !*checked;
+            publish_checked(&mut context, *checked);
+        }
+    }
 }
 
-#[derive(Debug, State, Default)]
+#[derive(Debug, State)]
 pub struct BBCheckboxState {
     checked: Value<bool>,
-    started_clicking: Value<bool>,
+    interactive_state: Value<String>,
+}
+
+impl Default for BBCheckboxState {
+    fn default() -> Self {
+        let checked = Value::default();
+        let interactive_state = Value::new(String::from(InteractiveState::Normal));
+
+        Self {
+            checked,
+            interactive_state,
+        }
+    }
+}
+
+fn publish_checked(context: &mut Context<'_, '_, BBCheckboxState>, checked_state: bool) {
+    context.publish("on_change", checked_state);
 }
