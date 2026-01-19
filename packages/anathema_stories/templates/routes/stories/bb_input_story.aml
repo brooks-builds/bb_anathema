@@ -1,0 +1,25 @@
+vstack
+vstack
+	@BBHeading [text: "BB Input Story"]
+
+	if state.show_preview
+		@BBButton (click->toggle_preview) [label: "Turn off preview"]
+	else
+		@BBButton (click->toggle_preview) [label: "Turn on preview"]
+	if state.show_preview
+		@BBInput [label: state.attribute_label, initial_value: state.attribute_label]
+		
+
+	@BBHeading [text: "Attributes"]
+	@BBInput (on_change->set_label) [label: "label", initial_value: state.attribute_label]
+	@BBInput (on_change->set_initial_value) [label: "initial value", initial_value: state.attribute_initial_value]
+
+	@BBHeading [text: "Events"]
+	text "on_change -> String"
+
+	if state.show_aml
+		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBInput AML"]
+	else 
+		@BBButton (click->show_aml) [label: "generate aml"]
+
+

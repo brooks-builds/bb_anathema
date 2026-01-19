@@ -13,7 +13,7 @@ use crate::{
         },
         stories::{
             bb_checkbox_story::BBCheckboxStory, bb_heading_story::BBHeadingStory,
-            bbblock::BBBlockStory, bbbutton_story,
+            bb_input_story::BBInputStory, bbblock::BBBlockStory, bbbutton_story,
         },
     },
 };
@@ -51,6 +51,7 @@ pub fn run() -> Result<()> {
     bbbutton_story::BBButtonStory::register_to(&mut builder)?;
     BBCheckboxStory::register_to(&mut builder)?;
     BBHeadingStory::register_to(&mut builder)?;
+    BBInputStory::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))
