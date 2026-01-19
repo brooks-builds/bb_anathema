@@ -6,14 +6,11 @@ pub mod input;
 pub mod link;
 pub mod top_nav;
 
-use std::borrow::Cow;
-
 use crate::{
     block::BBBlock, button::BBButton, checkbox::BBCheckbox, heading::BBHeading, input::BBInput,
     top_nav::BBTopNav,
 };
 use anathema::{
-    component::Component,
     resolver::ValueKind,
     runtime::{Builder, Error},
 };

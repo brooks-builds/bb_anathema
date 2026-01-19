@@ -18,6 +18,9 @@ vstack
 						text "Creating a Component"
 				@BBHeading [text: "Components", padding_top: 1]
 				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_button"]
+						text "BBButton"
+				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
 						text "BBTopNav"
 				padding [left: 2]

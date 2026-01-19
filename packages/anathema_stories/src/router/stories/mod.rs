@@ -1,2 +1,2 @@
-pub mod BBBlock;
-pub mod BBButtonStory;
+pub mod bbblock;
+pub mod bbbutton_story;

@@ -49,10 +49,10 @@ fn rust_code() -> &'static str {
 };
 use bb_anathema_components::BBAppComponent;
 
-pub struct BBBlockStory;
+pub struct BBComponentStory;
 
-impl Component for BBBlockStory {
-    type State = BBBlockStoryState;
+impl Component for BBComponentStory {
+    type State = BBComponentState;
 
     type Message = ();
 
@@ -68,40 +68,6 @@ impl Component for BBBlockStory {
                 let show_preview = *state.show_preview.to_ref();
 
                 state.show_preview.set(!show_preview);
-            }
-            "set_max_height" => {
-                let Some(height) = event.data_checked::<String>() else {
-                    return;
-                };
-                let height = height.parse::<u16>().unwrap_or(0);
-
-                state.attribute_height.set(height);
-            }
-            "set_header" => {
-                let header = event.data_checked::<String>().cloned().unwrap_or_default();
-                let header = header == "true";
-
-                state.attribute_header.set(header);
-            }
-            "set_scroll" => {
-                let scroll = event.data_checked::<String>().cloned().unwrap_or_default() == "true";
-
-                state.attribute_scroll.set(scroll);
-            }
-            "set_title" => {
-                let title = event.data_checked::<String>().cloned().unwrap_or_default();
-
-                state.attribute_title.set(title);
-            }
-            "set_copy" => {
-                let copy = event.data_checked::<String>().cloned().unwrap_or_default() == "true";
-
-                state.attribute_copy.set(copy);
-            }
-            "set_value" => {
-                let value = event.data_checked::<String>().cloned().unwrap_or_default();
-
-                state.attribute_value.set(value);
             }
             "show_aml" => {
                 let max_height = *state.attribute_height.to_ref();
@@ -122,53 +88,35 @@ impl Component for BBBlockStory {
 }
 
 #[derive(Debug, State)]
-pub struct BBBlockStoryState {
+pub struct BBComponentState {
     show_preview: Value<bool>,
-    attribute_height: Value<u16>,
-    attribute_header: Value<bool>,
-    attribute_scroll: Value<bool>,
-    attribute_title: Value<String>,
-    attribute_copy: Value<bool>,
-    attribute_value: Value<String>,
     aml: Value<String>,
     show_aml: Value<bool>,
 }
 
-impl Default for BBBlockStoryState {
+impl Default for BBComponentState {
     fn default() -> Self {
         let show_preview = Value::new(true);
-        let attribute_height = Value::new(10);
-        let attribute_header = Value::new(true);
-        let attribute_scroll = Value::new(true);
-        let attribute_title = Value::new("Block Title".to_owned());
-        let attribute_copy = Value::new(true);
-        let attribute_value = Value::new("I am the contents of the block".to_owned());
         let aml = Value::default();
         let show_aml = Value::new(false);
 
         Self {
             show_preview,
-            attribute_height,
-            attribute_header,
-            attribute_scroll,
-            attribute_title,
-            attribute_copy,
-            attribute_value,
             aml,
             show_aml,
         }
     }
 }
 
-impl BBAppComponent for BBBlockStory {
+impl BBAppComponent for BBComponentStory {
     fn register_to(
         builder: &mut anathema::runtime::Builder<()>,
     ) -> Result<(), anathema::runtime::Error> {
         builder.component(
-            "BBBlockStory",
-            "templates/routes/stories/block_story.aml",
+            "BBComponentStory",
+            "templates/routes/stories/bb_component_story.aml",
             Self,
-            BBBlockStoryState::default(),
+            BBComponentState::default(),
         )?;
 
         Ok(())
@@ -238,32 +186,25 @@ fn generate_aml(
 
     aml
 }
-    "#
+"#
 }
 
 fn aml_code() -> &'static str {
     r#"vstack
-	@BBHeading [text: "BBBlock"]
+vstack
+	@BBHeading [text: "Component"]
 	if state.show_preview
 		@BBButton (click->toggle_preview) [label: "Turn off preview"]
 	else
 		@BBButton (click->toggle_preview) [label: "Turn on preview"]
 	if state.show_preview
-		@BBBlock [max_height: state.attribute_height, header: state.attribute_header, scroll: state.attribute_scroll, title: state.attribute_title, copy: state.attribute_copy, value: state.attribute_value]
+		text "snippet goes here"
 		
 	@BBHeading [text: "Attributes"]
-	@BBInput (on_change->set_max_height) [label: "max_height", initial_value: to_str(state.attribute_height)]
-	@BBInput (on_change->set_header) [label: "header", initial_value: to_str(state.attribute_header)]
-	@BBInput (on_change->set_scroll) [label: "scroll", initial_value: to_str(state.attribute_scroll)]
-	@BBInput (on_change->set_title) [label: "title", initial_value: state.attribute_title]
-	@BBInput (on_change->set_copy) [label: "copy", initial_value: to_str(state.attribute_copy)]
-	@BBInput (on_change->set_value) [label: "value", initial_value: state.attribute_value]
 	@BBHeading [text: "Events"]
-	text "copied -> ()"
 	if state.show_aml
 		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBBlock AML"]
 	else 
 		@BBButton (click->show_aml) [label: "generate aml"]
-
 "#
 }
