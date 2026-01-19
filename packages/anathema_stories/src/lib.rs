@@ -11,7 +11,10 @@ use crate::{
             creating_a_component::CreatingAComponent, new_anathema::NewAnathemaSnippet,
             new_component::NewComponent, new_snippet::NewSnippet,
         },
-        stories::{bb_checkbox_story::BBCheckboxStory, bbblock::BBBlockStory, bbbutton_story},
+        stories::{
+            bb_checkbox_story::BBCheckboxStory, bb_heading_story::BBHeadingStory,
+            bbblock::BBBlockStory, bbbutton_story,
+        },
     },
 };
 use anathema::{
@@ -47,6 +50,7 @@ pub fn run() -> Result<()> {
     CreatingAComponent::register_to(&mut builder)?;
     bbbutton_story::BBButtonStory::register_to(&mut builder)?;
     BBCheckboxStory::register_to(&mut builder)?;
+    BBHeadingStory::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))

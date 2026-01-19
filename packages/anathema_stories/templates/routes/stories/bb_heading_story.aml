@@ -1,0 +1,25 @@
+
+vstack
+vstack
+	@BBHeading [text: "BB Heading Story"]
+
+	if state.show_preview
+		@BBButton (click->toggle_preview) [label: "Turn off preview"]
+	else
+		@BBButton (click->toggle_preview) [label: "Turn on preview"]
+	if state.show_preview
+		@BBHeading [text: state.attribute_text, padding_top: state.attribute_padding_top, padding_bottom: state.attribute_padding_bottom]
+		
+
+	@BBHeading [text: "Attributes"]
+	@BBInput (on_change->set_text) [label: "text", initial_value: state.attribute_text]
+	@BBInput (on_change->set_padding_bottom) [label: "padding_bottom", initial_value: to_str(state.attribute_padding_bottom)]
+	@BBInput (on_change->set_padding_top) [label: "padding_top", initial_value: to_str(state.attribute_padding_top)]
+
+	@BBHeading [text: "Events"]
+
+	if state.show_aml
+		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBHeading AML"]
+	else 
+		@BBButton (click->show_aml) [label: "generate aml"]
+
