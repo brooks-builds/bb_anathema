@@ -192,19 +192,27 @@ fn generate_aml(
 fn aml_code() -> &'static str {
     r#"vstack
 vstack
-	@BBHeading [text: "Component"]
+	@BBHeading [text: "BB Checkbox Story"]
+
 	if state.show_preview
 		@BBButton (click->toggle_preview) [label: "Turn off preview"]
 	else
 		@BBButton (click->toggle_preview) [label: "Turn on preview"]
 	if state.show_preview
-		text "snippet goes here"
+		@BBCheckbox [label: state.attribute_label, checked: state.attribute_checked]
 		
+
 	@BBHeading [text: "Attributes"]
+	@BBInput (on_change->set_label) [label: "label"]
+	@BBCheckbox (on_change->set_checked) [label: "checked", state.attribute_checked]
+
 	@BBHeading [text: "Events"]
+	text "on_change" -> bool
+
 	if state.show_aml
-		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBBlock AML"]
+		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBCheckbox AML"]
 	else 
 		@BBButton (click->show_aml) [label: "generate aml"]
+
 "#
 }

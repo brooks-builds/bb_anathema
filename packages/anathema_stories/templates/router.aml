@@ -7,4 +7,5 @@ switch state.path
 	case "/stories/bbbock_story": @BBBlockStory [width: attributes.width, height: attributes.height]
 	case "/snippets/creating_a_component": @creating_a_component [width: attributes.width, height: attributes.height]
 	case "/stories/bb_button": @BBButtonStory [width: attributes.width, height: attributes.height]
+	case "/stories/bb_checkbox": @BBCheckboxStory [width: attributes.width, height: attributes.height]
 
