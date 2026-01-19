@@ -35,6 +35,9 @@ vstack
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_input"]
 						text "BBInput"
 				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_link"]
+						text "BBLink"
+				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_topnav"]
 						text "BBTopNav"
 		container [width: state.main_width, height: state.height]

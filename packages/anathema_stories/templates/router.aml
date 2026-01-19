@@ -10,4 +10,5 @@ switch state.path
 	case "/stories/bb_checkbox": @BBCheckboxStory [width: attributes.width, height: attributes.height]
 	case "/stories/bb_heading": @BBHeadingStory [width: attributes.width, height: attributes.height]
 	case "/stories/bb_input": @BBInputStory [width: attributes.width, height: attributes.height]
+	case "/stories/bb_link": @BBLinkStory [width: attributes.width, height: attributes.height]
 

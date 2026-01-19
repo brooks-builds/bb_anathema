@@ -1,0 +1,29 @@
+vstack
+vstack
+	@BBHeading [text: "BB Link Story"]
+
+	if state.show_preview
+		@BBButton (click->toggle_preview) [label: "Turn off preview"]
+	else
+		@BBButton (click->toggle_preview) [label: "Turn on preview"]
+	if state.show_preview
+		padding [top: 1]
+			@BBLink
+				text "child component"
+		
+
+	@BBHeading [text: "Attributes"]
+	@BBInput (on_change->set_nav_to) [label: "nav_to", initial_value: state.attribute_nav_to]
+
+	@BBHeading [text: "Events"]
+	text "nav_to -> String"
+
+	@BBHeading [text: "Children"]
+	text "The BBLink component takes a child."
+
+	if state.show_aml
+		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBLink AML"]
+	else 
+		@BBButton (click->show_aml) [label: "generate aml"]
+
+
