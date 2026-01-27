@@ -26,7 +26,8 @@ impl Component for BBButtonStory {
             }
             "show_aml" => {
                 let label = state.attribute_label.to_ref();
-                let aml = generate_aml(label.as_str());
+                let disabled = *state.attribute_disabled.to_ref();
+                let aml = generate_aml(label.as_str(), disabled);
 
                 state.aml.set(aml);
                 state.show_aml.set(true);
@@ -36,6 +37,11 @@ impl Component for BBButtonStory {
                 let label = event.data_checked::<String>().cloned().unwrap_or_default();
 
                 state.attribute_label.set(label);
+            }
+            "toggle_disabled" => {
+                let disabled = *state.attribute_disabled.to_ref();
+
+                state.attribute_disabled.set(!disabled);
             }
             _ => (),
         }
@@ -48,6 +54,7 @@ pub struct BBButtonState {
     aml: Value<String>,
     show_aml: Value<bool>,
     attribute_label: Value<String>,
+    attribute_disabled: Value<bool>,
 }
 
 impl Default for BBButtonState {
@@ -56,12 +63,14 @@ impl Default for BBButtonState {
         let aml = Value::default();
         let show_aml = Value::new(false);
         let attribute_label = Value::new("Button Label".to_owned());
+        let attribute_disabled = Value::default();
 
         Self {
             show_preview,
             aml,
             show_aml,
             attribute_label,
+            attribute_disabled,
         }
     }
 }
@@ -81,6 +90,6 @@ impl BBAppComponent for BBButtonStory {
     }
 }
 
-fn generate_aml(label: &str) -> String {
-    format!("@BBButton [label: \"{label}\"]")
+fn generate_aml(label: &str, disabled: bool) -> String {
+    format!("@BBButton (click->click) [label: \"{label}\", disabled: {disabled}]")
 }

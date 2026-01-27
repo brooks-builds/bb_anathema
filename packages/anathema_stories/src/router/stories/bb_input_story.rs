@@ -91,7 +91,7 @@ impl BBAppComponent for BBInputStory {
 }
 
 fn generate_aml(label: &str, initial_value: &str) -> String {
-    let mut aml = String::from("@BBBlock [");
+    let mut aml = String::from("@BBInput (on_change->on_change) [");
     let mut previously_added_attribute = false;
 
     if !label.is_empty() {

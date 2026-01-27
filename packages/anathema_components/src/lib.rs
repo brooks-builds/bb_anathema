@@ -71,6 +71,7 @@ enum InteractiveState {
     Focused,
     MouseOver,
     MouseDown,
+    Disabled,
 }
 
 impl InteractiveState {
@@ -92,6 +93,7 @@ impl From<InteractiveState> for String {
             InteractiveState::Focused => "focused",
             InteractiveState::MouseOver => "mouse_over",
             InteractiveState::MouseDown => "mouse_down",
+            InteractiveState::Disabled => "disabled",
         }
         .to_owned()
     }
@@ -104,6 +106,7 @@ impl From<&str> for InteractiveState {
             "focused" => Self::Focused,
             "mouse_over" => Self::MouseOver,
             "mouse_down" => Self::MouseDown,
+            "disabled" => Self::Disabled,
             _ => Self::Normal,
         }
     }

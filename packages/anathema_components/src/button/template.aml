@@ -3,6 +3,10 @@ let THEME = {
 	focused: {bg: "light_green", fg: "black"},
 	mouse_over: {bg: "light_yellow", fg: "black"},
 	mouse_down: {bg: "yellow", fg: "black"},
+	disabled: {bg: "dark_grey", fg: "black"},
 }
 
-text [background: THEME[state.interactive_state].bg, foreground: THEME[state.interactive_state].fg] attributes.label
+if attributes.disabled
+	text [background: THEME.disabled.bg, foreground: THEME.disabled.fg] attributes.label
+else
+	text [background: THEME[state.interactive_state].bg, foreground: THEME[state.interactive_state].fg] attributes.label
