@@ -7,12 +7,13 @@ vstack
 	else
 		@BBButton (click->toggle_preview) [label: "Turn on preview"]
 	if state.show_preview
-		@BBInput [label: state.attribute_label, initial_value: state.attribute_label]
+		@BBInput [label: state.attribute_label, initial_value: state.attribute_label, error: "value has an error"]
 		
 
 	@BBHeading [text: "Attributes"]
 	@BBInput (on_change->set_label) [label: "label", initial_value: state.attribute_label]
 	@BBInput (on_change->set_initial_value) [label: "initial value", initial_value: state.attribute_initial_value]
+	@BBInput (on_change->set_error) [label: "error", initial_value: state.attribute_error]
 
 	@BBHeading [text: "Events"]
 	text "on_change -> String"

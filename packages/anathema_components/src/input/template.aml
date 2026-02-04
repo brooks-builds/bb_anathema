@@ -5,9 +5,11 @@ let THEME = {
 	mouse_down: {bg: "", fg: ""},
 }
 
-hstack 
-	padding [right: 2]
-		text attributes.label
-	zstack
-		border [sides: "bottom", min_width: 15, foreground: THEME[state.interactive_state].fg]
-			text [foreground: ""] bb_insert_into(state.value, state.cursor_index, "|")
+vstack
+	hstack 
+		padding [right: 2]
+			text attributes.label
+		zstack
+			border [sides: "bottom", min_width: 15, foreground: THEME[state.interactive_state].fg]
+				text [foreground: ""] bb_insert_into(state.value, state.cursor_index, "|")
+	text [foreground: "red"] attributes.error
