@@ -1,0 +1,11 @@
+let THEME = {
+	"true": {border_fg: "white"},
+	"false": {border_fg: "dark_grey"},
+	"normal": {background: ""},
+	"focused": {background: "dark_grey"},
+	"mouse_over": {background: "dark_grey"},
+	"mouse_down": {background: "light_grey"},
+}
+
+border [foreground: THEME[to_str(attributes.selected)].border_fg, background: THEME[state.interactive_state].background]
+	text [background: attributes.color_name, inverse: false] "  "

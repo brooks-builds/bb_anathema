@@ -8,6 +8,7 @@ switch state.path
 	case "/snippets/creating_a_component": @creating_a_component [width: attributes.width, height: attributes.height]
 	case "/stories/bb_button": @BBButtonStory [width: attributes.width, height: attributes.height]
 	case "/stories/bb_checkbox": @BBCheckboxStory [width: attributes.width, height: attributes.height]
+	case "/stories/bb_color_picker": @BBColorPickerStory 
 	case "/stories/bb_heading": @BBHeadingStory [width: attributes.width, height: attributes.height]
 	case "/stories/bb_input": @BBInputStory [width: attributes.width, height: attributes.height]
 	case "/stories/bb_link": @BBLinkStory [width: attributes.width, height: attributes.height]

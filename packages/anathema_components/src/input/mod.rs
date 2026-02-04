@@ -123,6 +123,10 @@ impl Component for BBInput {
 
                 context.publish("on_change", value.clone());
             }
+            anathema::component::KeyCode::Enter => {
+                let value = state.value.to_ref().clone();
+                context.publish("on_enter", value);
+            }
             _ => (),
         }
     }

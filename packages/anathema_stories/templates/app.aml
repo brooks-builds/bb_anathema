@@ -29,6 +29,9 @@ vstack
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_checkbox"]
 						text "BBCheckbox"
 				padding [left: 2]
+					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_color_picker"]
+						text "BBColorPicker"
+				padding [left: 2]
 					@BBLink (nav_to->nav_to) [nav_to: "/stories/bb_heading"]
 						text "BBHeading"
 				padding [left: 2]

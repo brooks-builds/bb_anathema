@@ -17,6 +17,7 @@ vstack
 
 	@BBHeading [text: "Events"]
 	text "on_change -> String"
+	text "on_enter -> String"
 
 	if state.show_aml
 		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBInput AML"]

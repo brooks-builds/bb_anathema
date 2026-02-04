@@ -12,9 +12,9 @@ use crate::{
             new_component::NewComponent, new_snippet::NewSnippet,
         },
         stories::{
-            bb_checkbox_story::BBCheckboxStory, bb_heading_story::BBHeadingStory,
-            bb_input_story::BBInputStory, bb_link_story::BBLinkStory, bbblock::BBBlockStory,
-            bbbutton_story,
+            bb_checkbox_story::BBCheckboxStory, bb_color_picker_story::BBColorPickerStory,
+            bb_heading_story::BBHeadingStory, bb_input_story::BBInputStory,
+            bb_link_story::BBLinkStory, bbblock::BBBlockStory, bbbutton_story,
         },
     },
 };
@@ -54,6 +54,7 @@ pub fn run() -> Result<()> {
     BBHeadingStory::register_to(&mut builder)?;
     BBInputStory::register_to(&mut builder)?;
     BBLinkStory::register_to(&mut builder)?;
+    BBColorPickerStory::register_to(&mut builder)?;
 
     builder
         .finish(&mut backend, |runtime, backend| runtime.run(backend))
