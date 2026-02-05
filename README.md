@@ -4,8 +4,9 @@
 
 ### Input
 
-- [ ] Add an error message
-- [ ] Break out input, and label into multiple components
+- [x] Add an error message
 - [ ] Add type support to input
   - [ ] String
   - [ ] i32
+
+### Message

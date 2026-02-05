@@ -7,7 +7,7 @@ vstack
 	else
 		@BBButton (click->toggle_preview) [label: "Turn on preview"]
 	if state.show_preview
-		@BBInput [label: state.attribute_label, initial_value: state.attribute_label, error: "value has an error"]
+		@BBInput [label: state.attribute_label, initial_value: state.attribute_label, error: state.attribute_error]
 		
 
 	@BBHeading [text: "Attributes"]

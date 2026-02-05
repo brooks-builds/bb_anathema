@@ -27,7 +27,8 @@ impl Component for BBInputStory {
             "show_aml" => {
                 let label = state.attribute_label.to_ref();
                 let initial_value = state.attribute_initial_value.to_ref();
-                let aml = generate_aml(label.as_str(), initial_value.as_str());
+                let error = state.attribute_error.to_ref();
+                let aml = generate_aml(label.as_str(), initial_value.as_str(), error.as_str());
 
                 state.aml.set(aml);
                 state.show_aml.set(true);
@@ -43,6 +44,13 @@ impl Component for BBInputStory {
 
                 state.attribute_initial_value.set(value);
             }
+            "set_error" => {
+                event.stop_propagation();
+
+                let value = event.data_checked::<String>().cloned().unwrap_or_default();
+
+                state.attribute_error.set(value);
+            }
             _ => (),
         }
     }
@@ -55,6 +63,7 @@ pub struct BBInputStoryState {
     show_aml: Value<bool>,
     attribute_label: Value<String>,
     attribute_initial_value: Value<String>,
+    attribute_error: Value<String>,
 }
 
 impl Default for BBInputStoryState {
@@ -64,6 +73,7 @@ impl Default for BBInputStoryState {
         let show_aml = Value::new(false);
         let attribute_label = Value::new("input value".to_owned());
         let attribute_initial_value = Value::new("input_value".to_owned());
+        let attribute_error = Value::new("input has an error".to_owned());
 
         Self {
             show_preview,
@@ -71,6 +81,7 @@ impl Default for BBInputStoryState {
             show_aml,
             attribute_label,
             attribute_initial_value,
+            attribute_error,
         }
     }
 }
@@ -90,24 +101,8 @@ impl BBAppComponent for BBInputStory {
     }
 }
 
-fn generate_aml(label: &str, initial_value: &str) -> String {
-    let mut aml = String::from("@BBInput (on_change->on_change, on_enter->on_enter) [");
-    let mut previously_added_attribute = false;
-
-    if !label.is_empty() {
-        aml.push_str(&format!("label: \"{label}\""));
-        previously_added_attribute = true;
-    }
-
-    if !initial_value.is_empty() {
-        if previously_added_attribute {
-            aml.push_str(", ");
-        }
-
-        aml.push_str(&format!("initial_value: \"{initial_value}\""));
-    }
-
-    aml.push(']');
-
-    aml
+fn generate_aml(label: &str, initial_value: &str, error: &str) -> String {
+    format!(
+        r#"@BBInput (on_change->on_change, on_enter->on_enter) [label: "{label}", initial_value: "{initial_value}", error: "{error}"]"#
+    )
 }

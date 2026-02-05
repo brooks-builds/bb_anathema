@@ -18,8 +18,8 @@ impl Component for BBColorPickerSwatch {
     fn on_focus(
         &mut self,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         state
             .interactive_state
@@ -29,8 +29,8 @@ impl Component for BBColorPickerSwatch {
     fn on_blur(
         &mut self,
         state: &mut Self::State,
-        mut children: anathema::component::Children<'_, '_>,
-        mut context: anathema::component::Context<'_, '_, Self::State>,
+        mut _children: anathema::component::Children<'_, '_>,
+        mut _context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         state.interactive_state.set(InteractiveState::Normal.into());
     }
