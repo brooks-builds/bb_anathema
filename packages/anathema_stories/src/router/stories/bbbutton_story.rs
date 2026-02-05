@@ -43,6 +43,15 @@ impl Component for BBButtonStory {
 
                 state.attribute_disabled.set(!disabled);
             }
+            "handle_click" => {
+                event.stop_propagation();
+
+                let Some(button_value) = event.data_checked::<String>() else {
+                    return;
+                };
+
+                state.last_click_event.set(button_value.clone());
+            }
             _ => (),
         }
     }
@@ -55,6 +64,8 @@ pub struct BBButtonState {
     show_aml: Value<bool>,
     attribute_label: Value<String>,
     attribute_disabled: Value<bool>,
+    attribute_value: Value<String>,
+    last_click_event: Value<String>,
 }
 
 impl Default for BBButtonState {
@@ -64,6 +75,8 @@ impl Default for BBButtonState {
         let show_aml = Value::new(false);
         let attribute_label = Value::new("Button Label".to_owned());
         let attribute_disabled = Value::default();
+        let attribute_value = Value::new("value".to_owned());
+        let last_click_event = Value::default();
 
         Self {
             show_preview,
@@ -71,6 +84,8 @@ impl Default for BBButtonState {
             show_aml,
             attribute_label,
             attribute_disabled,
+            attribute_value,
+            last_click_event,
         }
     }
 }
@@ -91,5 +106,7 @@ impl BBAppComponent for BBButtonStory {
 }
 
 fn generate_aml(label: &str, disabled: bool) -> String {
-    format!("@BBButton (click->click) [label: \"{label}\", disabled: {disabled}]")
+    format!(
+        r#"@BBButton (click->click) [label: \"{label}\", disabled: {disabled}, value: "value"]"#
+    )
 }

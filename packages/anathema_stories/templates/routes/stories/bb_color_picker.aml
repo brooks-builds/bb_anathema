@@ -7,19 +7,27 @@ vstack
 	else
 		@BBButton (click->toggle_preview) [label: "Turn on preview"]
 	if state.show_preview
-		@BBColorPicker [colors: state.attribute_colors, selected: state.attribute_selected]
+		@BBColorPicker (on_select->set_color) [colors: state.attribute_colors, selected: state.attribute_selected]
 		
 
-	@BBHeading [text: "Attributes"]
-	text "colors -> List of Strings"
-	text "selected -> String"
+	padding [top: 1, bottom: 1]
+		@BBHeading [text: "Attributes"]
+	text "colors: List of color names as strings"
+	@BBInput (on_change->set_attribute_selected, on_enter->set_attribute_selected) [label: "selected", initial_value: state.attribute_selected, error: ""]
 
-	@BBHeading [text: "Events"]
+	padding [top: 1, bottom: 1]
+		@BBHeading [text: "Events"]
+	hstack
+		text "on_select -> String"
+		text " (last selected: "
+		text state.last_selected
+		text ")"
 
-	if state.show_aml
-		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBColorPicker AML"]
-	else 
-		@BBButton (click->show_aml) [label: "generate aml"]
+	padding [top: 1]
+		if state.show_aml
+			@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBColorPicker AML"]
+		else 
+			@BBButton (click->show_aml) [label: "generate aml"]
 
 
 

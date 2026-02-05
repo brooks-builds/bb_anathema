@@ -1,3 +1,3 @@
 hstack
 	for color_name in attributes.colors
-		@BBColorPickerSwatch [color_name: color_name, selected: color_name == attributes.selected]
+		@BBColorPickerSwatch (on_select->color_selected) [color_name: color_name, selected: color_name == attributes.selected]

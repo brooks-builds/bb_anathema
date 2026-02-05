@@ -202,12 +202,16 @@ vstack
 		@BBCheckbox [label: state.attribute_label, checked: state.attribute_checked]
 		
 
-	@BBHeading [text: "Attributes"]
-	@BBInput (on_change->set_label) [label: "label"]
-	@BBCheckbox (on_change->set_checked) [label: "checked", state.attribute_checked]
+	padding [top: 1, bottom: 1]
+		vstack
+        	@BBHeading [text: "Attributes"]
+        	@BBInput (on_change->set_label) [label: "label"]
+        	@BBCheckbox (on_change->set_checked) [label: "checked", state.attribute_checked]
 
-	@BBHeading [text: "Events"]
-	text "on_change" -> bool
+	padding [top: 1, bottom: 1]
+		vstack
+        	@BBHeading [text: "Events"]
+        	text "on_change" -> bool
 
 	if state.show_aml
 		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBCheckbox AML"]

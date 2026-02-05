@@ -6,15 +6,24 @@ vstack
 		@BBButton (click->toggle_preview) [label: "Turn on preview"]
 	if state.show_preview
 		padding [top: 1]
-			@BBButton [label: state.attribute_label, disabled: state.attribute_disabled]
+			@BBButton (click->handle_click) [label: state.attribute_label, disabled: state.attribute_disabled, value: state.attribute_value]
 		
-	@BBHeading [text: "Attributes"]
-	@BBInput (on_change->set_label) [label: "label", initial_value: state.attribute_label]
+	padding [top: 1, bottom: 1]
+		vstack
+			@BBHeading [text: "Attributes"]
+			@BBInput (on_change->set_label) [label: "label", initial_value: state.attribute_label]
 	@BBCheckbox (on_change->toggle_disabled) [label: "disabled"]
+	@BBInput (on_change->set_value) [label: "value", initial_value: state.attribute_value]
 
 
-	@BBHeading [text: "Events"]
-	text "click -> ()"
+	padding [top: 1, bottom: 1]
+		vstack
+			@BBHeading [text: "Events"]
+			hstack
+				text "click -> String (Last event: "
+				text state.last_click_event
+				text ")"
+
 	if state.show_aml
 		@BBBlock (copied->remove_aml) [value: state.aml, header: true, copy: true, title: "BBButton AML"]
 	else 

@@ -34,7 +34,12 @@ impl Component for BBButton {
                 .interactive_state
                 .set(String::from(InteractiveState::MouseDown));
         } else if is_mouse_over && mouse.left_up() && interactive_state.is_mouse_down() {
-            context.publish("click", ());
+            let value = context
+                .attribute("value")
+                .and_then(|value| value.as_str())
+                .unwrap_or_default()
+                .to_owned();
+            context.publish("click", value);
             state
                 .interactive_state
                 .set(String::from(InteractiveState::Normal));
@@ -79,7 +84,12 @@ impl Component for BBButton {
         mut context: anathema::component::Context<'_, '_, Self::State>,
     ) {
         if matches!(key.code, anathema::component::KeyCode::Enter) {
-            context.publish("click", ());
+            let value = context
+                .attribute("value")
+                .and_then(|value| value.as_str())
+                .unwrap_or_default()
+                .to_owned();
+            context.publish("click", value);
         }
     }
 }

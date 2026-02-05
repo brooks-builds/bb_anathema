@@ -1,11 +1,11 @@
 let THEME = {
 	"true": {border_fg: "white"},
 	"false": {border_fg: "dark_grey"},
-	"normal": {background: ""},
-	"focused": {background: "dark_grey"},
-	"mouse_over": {background: "dark_grey"},
-	"mouse_down": {background: "light_grey"},
+	"normal": {border_fg: "", border_bg: ""},
+	"focused": {border_bg: "light_green", border_fg: ""},
+	"mouse_over": {border_bg: "yellow", border_fg: ""},
+	"mouse_down": {border_bg: "light_yellow", border_fg: ""},
 }
 
-border [foreground: THEME[to_str(attributes.selected)].border_fg, background: THEME[state.interactive_state].background]
-	text [background: attributes.color_name, inverse: false] "  "
+border [foreground: THEME[to_str(attributes.selected)].border_fg, background: THEME[state.interactive_state].border_bg]
+	text [background: attributes.color_name] "  "

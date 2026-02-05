@@ -31,6 +31,22 @@ impl Component for BBColorPickerStory {
                 state.show_aml.set(true);
             }
             "remove_aml" => state.show_aml.set(false),
+            "set_attribute_selected" => {
+                let Some(color_name) = event.data_checked::<String>().cloned() else {
+                    return;
+                };
+
+                state.attribute_selected.set(color_name);
+            }
+            "set_color" => {
+                event.stop_propagation();
+
+                let Some(color_name) = event.data_checked::<String>().cloned() else {
+                    return;
+                };
+
+                state.last_selected.set(color_name);
+            }
             _ => (),
         }
     }
@@ -43,6 +59,7 @@ pub struct BBColorPickerStoryState {
     show_aml: Value<bool>,
     attribute_colors: Value<List<String>>,
     attribute_selected: Value<String>,
+    last_selected: Value<String>,
 }
 
 impl Default for BBColorPickerStoryState {
@@ -51,7 +68,8 @@ impl Default for BBColorPickerStoryState {
         let aml = Value::default();
         let show_aml = Value::new(false);
         let mut attribute_colors = Value::new(List::empty());
-        let attribute_selected = Value::new("red".to_owned());
+        let attribute_selected = Value::new("blue".to_owned());
+        let last_selected = Value::default();
 
         attribute_colors.push("red".to_owned());
         attribute_colors.push("green".to_owned());
@@ -66,6 +84,7 @@ impl Default for BBColorPickerStoryState {
             show_aml,
             attribute_colors,
             attribute_selected,
+            last_selected,
         }
     }
 }
@@ -86,5 +105,5 @@ impl BBAppComponent for BBColorPickerStory {
 }
 
 fn generate_aml() -> String {
-    "@BBColorPicker".to_owned()
+    r#"@BBColorPicker (on_select->on_select) [colors: state.colors, selected: "red"]"#.to_owned()
 }
